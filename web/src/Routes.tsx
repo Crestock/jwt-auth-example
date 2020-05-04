@@ -1,12 +1,13 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
-import theme from "./UI/theme";
+import theme from "./Styling/theme";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Bye } from "./pages/Bye";
 import { Header } from "./Header";
+import Navbar from "./components/navigation/NavBar";
 
 export const Routes: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ export const Routes: React.FC = () => {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <div>
+          <Navbar />
           <Header />
           <Switch>
             <Route exact path="/" component={Home} />

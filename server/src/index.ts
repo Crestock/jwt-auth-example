@@ -1,6 +1,7 @@
 import "dotenv/config";
 import "reflect-metadata";
 import express from "express";
+import morgan from "morgan"
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./UserResolver";
@@ -17,9 +18,10 @@ import { createAccessToken, createRefreshToken } from "./auth";
   app.use(
     cors({
       origin: "http://localhost:3000",
-      credentials: true
+      credentials: true,
     })
   );
+  app.use(morgan("dev"));
   app.use(cookieParser());
   app.get("/", (_req, res) => res.send("hello"));
   app.post("/refresh_token", async (req, res) => {
@@ -57,9 +59,9 @@ import { createAccessToken, createRefreshToken } from "./auth";
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver]
+      resolvers: [UserResolver],
     }),
-    context: ({ req, res }) => ({ req, res })
+    context: ({ req, res }) => ({ req, res }),
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
